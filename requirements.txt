@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+supabase
+python-dotenv
+python-jose
+passlib
+dotenv
+bcrypt==4.1.2
+python-multipart

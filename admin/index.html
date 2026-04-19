@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Myers College - Admin Portal</title>
+  <link rel="icon" href="/assets/images/myers-logo.png" type="image/png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/admin/assets/css/style.css" />
+</head>
+<body>
+  <!-- LOGIN CONTAINER -->
+  <div id="loginContainer" class="login-wrapper">
+    <div class="login-box">
+      <div class="login-header">
+        <img src="/assets/images/myers-logo.png" alt="Myers College" class="logo" />
+        <h1>Myers College</h1>
+        <p class="subtitle">Admin Portal</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            class="form-control" 
+            placeholder="Enter your username" 
+            required 
+          />
+        </div>
+
+     <div class="form-group">
+  <label for="password">Password</label>
+  <div style="position: relative;">
+    <input 
+      type="password" 
+      id="password" 
+      class="form-control" 
+      placeholder="Enter your password" 
+      required 
+      style="padding-right: 42px;"
+    />
+    <button 
+      type="button" 
+      id="togglePassword" 
+      style="
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 6px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+      title="Show Password"
+    >
+      <i class="bi bi-eye-slash"></i>
+    </button>
+  </div>
+</div>
+
+        <button type="submit" class="btn-login">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+      </form>
+
+      <div id="loginError" class="alert alert-danger mt-3 d-none" role="alert">
+        <i class="bi bi-exclamation-circle"></i> <span id="errorMessage"></span>
+      </div>
+
+     <p class="login-footer">
+  <small>© 2026 Myers College Events Management System</small>
+</p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD CONTAINER -->
+  <div id="dashboardContainer" class="dashboard-wrapper d-none">
+    <!-- NAVBAR -->
+    <nav class="dashboard-navbar">
+      <div class="navbar-content">
+        <div class="navbar-left">
+          <img src="/assets/images/myers-logo.png" alt="Myers College" class="navbar-logo" />
+          <h2>Myers College - Admin</h2>
+        </div>
+        <div class="navbar-right">
+          <a href="/" target="_blank" class="btn-home-premium">
+            <i class="bi bi-display"></i> <span class="btn-text">View Website</span>
+          </a>
+          <span id="userDisplay" class="user-info">
+            <i class="bi bi-person-circle"></i> <span id="userName"></span>
+          </span>
+          <button id="logoutBtn" class="btn-logout">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="dashboard-content">
+      <div class="container-fluid">
+        <!-- HEADER -->
+        <div class="dashboard-header">
+          <div>
+            <h1>Events Management</h1>
+            <p>Manage college events and announcements</p>
+          </div>
+          <button id="addEventBtn" class="btn-add-event">
+            <i class="bi bi-plus-lg"></i> Add New Event
+          </button>
+        </div>
+
+        <!-- EVENTS TABLE -->
+        <div class="events-table-container">
+          <div class="table-responsive">
+            <table class="events-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>End Date</th>
+                  <th>Status</th>
+                  <th>Created By</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTableBody">
+                <tr>
+                  <td colspan="7" class="text-center py-5">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading events...</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD/EDIT EVENT MODAL -->
+  <div id="eventModal" class="modal d-none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Event</h2>
+        <button id="closeModalBtn" class="close-btn">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <form id="eventForm" class="event-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventTitle">Event Title *</label>
+            <input 
+              type="text" 
+              id="eventTitle" 
+              class="form-control" 
+              placeholder="e.g., Annual Sports Day" 
+              required 
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventDescription">Description</label>
+            <textarea 
+              id="eventDescription" 
+              class="form-control" 
+              placeholder="Event details..." 
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="eventDate">Start Date *</label>
+            <input 
+              type="date" 
+              id="eventDate" 
+              class="form-control" 
+              required 
+            />
+          </div>
+          <div class="form-group">
+            <label for="eventEndDate">End Date</label>
+            <input 
+              type="date" 
+              id="eventEndDate" 
+              class="form-control" 
+            />
+          </div>
+        </div>
+
+        <div class="form-row full">
+  <div class="form-group">
+    <label for="eventImage">Event Image</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <input 
+        type="file" 
+        id="eventImage" 
+        class="form-control" 
+        accept="image/jpeg,image/jpg,image/png,image/webp"
+        style="flex: 1;"
+      />
+      <button type="button" id="uploadImageBtn" class="btn-upload" style="padding: 10px 16px; background: #8B4513; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;">
+        <i class="bi bi-upload"></i> Upload
+      </button>
+    </div>
+    <small style="color: #666; margin-top: 6px; display: block;">JPG, JPEG, PNG, WEBP allowed. Max 5MB</small>
+    <div id="imagePreview" style="margin-top: 12px;">
+      <!-- Preview image here -->
+    </div>
+  </div>
+</div>
+
+<!-- Hidden input to store image URL -->
+<input type="hidden" id="eventImageUrl" />
+
+        <div class="modal-actions">
+          <button type="button" id="cancelBtn" class="btn-cancel">Cancel</button>
+          <button type="submit" class="btn-submit">
+  <i class="bi bi-check-lg"></i> <span id="submitBtnText">Create Event</span>
+</button>
+        </div>
+      </form>
+
+      <div id="eventFormError" class="alert alert-danger mt-3 d-none" role="alert">
+        <i class="bi bi-exclamation-circle"></i> <span id="formErrorMessage"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DELETE MODAL -->
+  <div id="deleteModal" class="modal d-none">
+    <div class="modal-content confirm-modal">
+      <div class="modal-header">
+        <h2>Delete Event</h2>
+      </div>
+      <p>Are you sure you want to delete this event? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button id="cancelDeleteBtn" class="btn-cancel">Cancel</button>
+        <button id="confirmDeleteBtn" class="btn-delete">
+          <i class="bi bi-trash"></i> Delete Event
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div id="modalOverlay" class="modal-overlay d-none"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/admin/assets/js/auth.js"></script>
+  <script src="/admin/assets/js/events.js"></script>
+</body>
+</html>
