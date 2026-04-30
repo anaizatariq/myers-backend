@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from pathlib import Path
 from app.config import ENVIRONMENT
 from app.database import supabase
-from app.routes import auth, events 
+from app.routes import auth, events, chat
 
 # FastAPI app initialize 
 app = FastAPI(
@@ -34,6 +34,7 @@ app.add_middleware(
 # ← include ROUTERS 
 app.include_router(auth.router)
 app.include_router(events.router)  # ← EVENTS ROUTER
+app.include_router(chat.router)    # ← CHATBOT ROUTER
 
 @app.get("/api/health")
 def health_check():
